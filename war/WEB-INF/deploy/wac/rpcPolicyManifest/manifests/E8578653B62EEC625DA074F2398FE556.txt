@@ -1,0 +1,2 @@
+serviceClass: edu.test.wac.client.ServerStorageEventService
+path: 4420524917B1FE8FA058076D06326579.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: edu.test.wac.client.GreetingService
+path: 0B436D341515A70B5799220FA9F6CCE8.gwt.rpc

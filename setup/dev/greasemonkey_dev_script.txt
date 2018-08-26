@@ -1,0 +1,123 @@
+// ==UserScript==
+// @name     wac-dev
+// @version  1
+// ==/UserScript==
+
+(async function() {
+
+  function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+  }
+  
+  function bootstrapLocalGwt(serverUrl, module) {
+    
+    /* Copied from /wac/wac.nocache.js */
+    (function($wnd, $doc){
+    // document.head does not exist in IE8
+    var $head = $doc.head || $doc.getElementsByTagName('head')[0];
+    // Compute some codeserver urls so as the user does not need bookmarklets
+    var hostName = $wnd.location.hostname;
+     var nocacheUrl = serverUrl + '/recompile-requester/' + module;
+
+    // Insert the superdevmode nocache script in the first position of the head
+    var devModeScript = $doc.createElement('script');
+    devModeScript.src = nocacheUrl;
+
+    // Everybody except IE8 does fire an error event
+    // This means that we do not detect a non running SDM with IE8.
+    if (devModeScript.addEventListener) {
+      var callback = function() {
+        // Don't show the confirmation dialogue twice (multimodule)
+        if (!$wnd.__gwt__sdm__confirmed &&
+             (!$wnd.__gwt_sdm__recompiler || !$wnd.__gwt_sdm__recompiler.loaded)) {
+          $wnd.__gwt__sdm__confirmed = true;
+          if ($wnd.confirm(
+              "Couldn't load " +  module + " from Super Dev Mode\n" +
+              "server at " + serverUrl + ".\n" +
+              "Please make sure this server is ready.\n" +
+              "Do you want to try again?")) {
+            $wnd.location.reload();
+          }
+        }
+      };
+      devModeScript.addEventListener("error", callback, true);
+    }
+
+    var injectScriptTag = function(){
+      $head.insertBefore(devModeScript, $head.firstElementChild || $head.children[0]);
+    };
+
+    if (/loaded|complete/.test($doc.readyState)) {
+      injectScriptTag();
+    } else {
+      //defer app script insertion until the body is ready
+      if($wnd.addEventListener){
+        $wnd.addEventListener('load', injectScriptTag, false);
+      } else{
+        $wnd.attachEvent('onload', injectScriptTag);
+      }
+    }
+  })(window, document);
+
+  }
+  
+  function bootstrapProductionGwt(serverUrl, module) {
+  	var tag = document.createElement("script");
+		tag.src = serverUrl+'/'+module+'/'+module+'.nocache.js';
+		document.getElementsByTagName("head")[0].appendChild(tag);
+  }
+  
+  if(window.location.href.startsWith('https://web.whatsapp.com') || 
+    window.location.href.startsWith('https://www.leo.org') ||
+    window.location.href.startsWith('https://www.google.')) {
+		
+    // https://web.whatsapp.com?gwt.supersvr=https://127.0.0.1:9877
+    
+    // !!! Install stunnel add rules
+    /*
+    ; TLS front-end to a web server (For superdev gwt)
+    [https]
+    accept  = 9877
+    connect = 9876
+    cert = stunnel.pem
+    ; "TIMEOUTclose = 0" is a workaround for a design flaw in Microsoft SChannel
+    ; Microsoft implementations do not use TLS close-notify alert and thus they
+    ; are vulnerable to truncation attacks
+    ;TIMEOUTclose = 0
+
+    ; TLS front-end to a web server (For calling on localhost server) (Start jetty first)
+    [https]
+    accept  = 443
+    connect = 8888
+    cert = stunnel.pem
+    ; "TIMEOUTclose = 0" is a workaround for a design flaw in Microsoft SChannel
+    ; Microsoft implementations do not use TLS close-notify alert and thus they
+    ; are vulnerable to truncation attacks
+    ;TIMEOUTclose = 0
+    */
+    
+    // !!! about:config -> security.csp.enable -> set to false
+    // !!! header editor -> add rule -> X-Frame-Options -> false
+    // https://www.leo.org/german-english?gwt.supersvr=https://127.0.0.1:9877
+  
+    //
+    var module = 'wac';
+     var serverUrl = findGetParameter('gwt.supersvr');
+    //
+     if(serverUrl!=null && serverUrl.length>0) {
+      bootstrapLocalGwt(serverUrl, module);
+     } else {
+      bootstrapProductionGwt("https://127.0.0.1", module);
+     }
+   
+  }
+  
+})();
+

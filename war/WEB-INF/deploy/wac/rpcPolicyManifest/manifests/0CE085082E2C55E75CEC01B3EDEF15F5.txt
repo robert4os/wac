@@ -1,0 +1,2 @@
+serviceClass: edu.test.wac.client.HumanMouseEventService
+path: 94DCABF277DCD87A3AB36E7B6EEF653A.gwt.rpc

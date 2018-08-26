@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <filter>
+    <filter-name>ChangeResponseHeader</filter-name> <!-- mandatory -->
+    <filter-class>edu.test.wac.server.ChangeResponseHeader</filter-class> <!-- mandatory -->
+    <init-param> <!-- optional -->
+    <param-name>test</param-name>
+    <param-value>testValue</param-value>
+    </init-param>
+  </filter>
+  
+   <filter-mapping>
+    <filter-name>ChangeResponseHeader</filter-name> <!-- mandatory -->
+    <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+  </filter-mapping>
+  
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>edu.test.wac.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>hmeServlet</servlet-name>
+    <servlet-class>edu.test.wac.server.HumanMouseEventServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ssServlet</servlet-name>
+    <servlet-class>edu.test.wac.server.ServerStorageServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/wac/greet</url-pattern>
+  </servlet-mapping>
+ 
+  <servlet-mapping>
+    <servlet-name>hmeServlet</servlet-name>
+    <url-pattern>/wac/hme</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ssServlet</servlet-name>
+    <url-pattern>/wac/ss</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Wac.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>

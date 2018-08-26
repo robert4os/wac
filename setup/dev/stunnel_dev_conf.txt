@@ -1,0 +1,24 @@
+﻿;...
+
+; TLS front-end to a web server
+[https]
+accept  = 9877
+connect = 9876
+cert = stunnel.pem
+; "TIMEOUTclose = 0" is a workaround for a design flaw in Microsoft SChannel
+; Microsoft implementations do not use TLS close-notify alert and thus they
+; are vulnerable to truncation attacks
+;TIMEOUTclose = 0
+
+; TLS front-end to a web server
+[https]
+accept  = 443
+connect = 8888
+cert = stunnel.pem
+; "TIMEOUTclose = 0" is a workaround for a design flaw in Microsoft SChannel
+; Microsoft implementations do not use TLS close-notify alert and thus they
+; are vulnerable to truncation attacks
+;TIMEOUTclose = 0
+
+
+;...

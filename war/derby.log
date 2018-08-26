@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Jul 19 16:01:43 CEST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0164-b2d8-b3b4-000010534cb8 
+on database directory C:\wac\wac-derby with class loader WebAppClassLoader=172678484@a4add54 
+Loaded from file:/C:/dev/RH/wac/war/WEB-INF/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_121-b13
+user.dir=C:\dev\RH\wac\war
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

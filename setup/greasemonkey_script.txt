@@ -1,0 +1,23 @@
+// ==UserScript==
+// @name     wac
+// @version  1
+// ==/UserScript==
+
+(async function() {
+  
+  function bootstrapProductionGwt(serverUrl, module) {
+  	var tag = document.createElement("script");
+		tag.src = serverUrl+'/'+module+'/'+module+'.nocache.js';
+		document.getElementsByTagName("head")[0].appendChild(tag);
+  }
+  
+  if(window.location.href.startsWith('https://web.whatsapp.com') || 
+    window.location.href.startsWith('https://www.google.at')) {
+    
+    //
+    var module = 'wac';
+    bootstrapProductionGwt("https://127.0.0.1", module);   
+  }
+  
+})();
+

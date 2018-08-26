@@ -1,0 +1,5 @@
+# Module wac
+# RPC service class, partial path of RPC policy file
+edu.test.wac.client.HumanMouseEventService, 94DCABF277DCD87A3AB36E7B6EEF653A.gwt.rpc
+edu.test.wac.client.GreetingService, 0B436D341515A70B5799220FA9F6CCE8.gwt.rpc
+edu.test.wac.client.ServerStorageEventService, 4420524917B1FE8FA058076D06326579.gwt.rpc
